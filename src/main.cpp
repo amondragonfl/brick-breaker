@@ -1,9 +1,12 @@
 #include <iostream>
 #include "GameEngine.hpp"
+#include "TimeManager.hpp"
 
 int main(int argc, char* argv[])
 {
     GameEngine game;
+    TimeManager time;
+
     try {
         game.init();
     }
@@ -13,9 +16,11 @@ int main(int argc, char* argv[])
     }
     while (game.running())
     {
+        time.recordFrameStart();
         game.handleEvents();
         game.update();
         game.render();
+        time.recordFrameEnd(); // Limits FPS
     }
     game.clean();
     return 0;
